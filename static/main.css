@@ -7,6 +7,26 @@ body{
     
 }
 
+.video__{
+    margin: auto;
+    border: black;
+}
+.button1 {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+
+  }
+  
+  .button:hover {
+    opacity:1;
+  }
+
 
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
@@ -43,3 +63,83 @@ a:active { text-decoration: none; }
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
+
+/*Register*/
+.h1_reg{
+    font-size: 50px;
+}
+.p_reg{ font-size: 18px;}
+
+.container_register{
+    background-color:white ;
+    padding: 16px;
+    width:80%;
+    margin: auto;
+    margin-top: 40px;
+  }
+
+  /* Full-width input fields */
+input[type=text] {
+    width: 80%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    font-size: 15px;
+    background: #f1f1f1;
+  }
+  .entries_reg{
+      float:inline-start;
+  }
+  .label_reg
+  {
+      font-size: 18px;
+      display: inline-block;
+      width:100%;
+  }
+  
+  input[type=text]:focus{
+    background-color: #ddd;
+    outline: none;
+    font-size: 15px;
+  }
+
+
+  /* Overwrite default styles of hr */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  
+
+/* Set a style for the submit/register button */
+.registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    opacity: 0.9;
+  }
+  
+  .registerbtn:hover {
+    opacity:1;
+  }
+
+
+/* Add a blue text color to links */
+a {
+    color: dodgerblue;
+  }
+  
+  /* Set a grey background color and center the text of the "sign in" section */
+  .signin {
+    background-color: #f1f1f1;
+    text-align: center;
+    width: 82%;
+    margin: auto;
+
+}
