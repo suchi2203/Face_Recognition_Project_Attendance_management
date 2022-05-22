@@ -1,0 +1,45 @@
+
+body{
+    background-image:url('back_index.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    
+}
+
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+    float:left;
+    width: 32%;
+    padding-left: 1%;
+  }
+  .row{
+      margin-top:8%;
+
+  }
+  /* Clear floats after image containers */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .image_front{
+      border-radius: 50%;
+      float: auto;
+      margin-left: 28%;
+  }
+
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+
+.text_front{
+    float: auto;
+    margin-left: 33.333%;
+    margin-top: 5%;
+    text-decoration: none;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
