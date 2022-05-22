@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+    </head>
+    <body>
+    <form >
+        <div class="container_register">
+            <h1 class="h1 _reg">Register</h1>
+            <p class="p_reg">Please fill in this form to create an account.</p>
+            <hr>
+            <div class="entries_reg">
+            <label class="label_reg"><b>Roll No</b></label>
+            <input type="text" placeholder="Enter Roll No." name="roll" id="text_reg" required>
+            <label class="label_reg" for="text"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name" id="text_reg" required>
+            <label class="label_reg" for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            </div>
+            <hr>
+            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+            <button type="submit" class="registerbtn">Register</button>
+          </div>
+        
+          <div class="container signin">
+            <p>Already have an account? <a href="/give_attendance">Give Attendance</a>.</p>
+          </div>
+        </div>
+    </form>
+    </body>
+
+
+</html> 
