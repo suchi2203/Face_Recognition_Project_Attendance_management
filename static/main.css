@@ -97,7 +97,7 @@ input[type=text] {
       display: inline-block;
       width:100%;
   }
-  
+  .retry{ color:red;}
   input[type=text]:focus{
     background-color: #ddd;
     outline: none;
