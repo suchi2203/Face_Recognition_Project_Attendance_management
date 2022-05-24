@@ -2,30 +2,32 @@ from flask import Flask,render_template,Response,request,redirect
 import cv2
 import face_recognition
 import numpy as np
-#from flask_sqlalchemy import SQLAlchemy
-#from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 
 app=Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_reg.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///att.db'
-#db = SQLAlchemy(app)
-
-#class Att(db.Model):
-#    roll=db.Column(db.String(9),primary_key=True)
- #   name=db.Column(db.String(20),nullable=False)
-  #  email=db.Column(db.String(40),nullable=False)
-   # encoding=db.Column(db.String())
-    #def __repr__(self) -> str:
-     #   return f'{self.roll} {self.name}'
+class Att(db.Model):
+    sno= db.Column(db.Integer, primary_key=True)
+    Id = db.Column(db.Integer,nullable=False)
+    name = db.Column(db.String(20),nullable=False)
+    email = db.Column(db.String(40),nullable=False)
+    face_encoding = db.Column(db.String(3000))
+    date_registered = db.Column(db.DateTime, default=datetime.utcnow)
+    def __repr__(self) -> str:
+        return f"{self.Id} {self.name} {self.email}"
 
 def face_encodings(image):
         img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         encode= face_recognition.face_encodings(img)[0]
         return encode
 
-def generate_frames(work=""):
+def generate_frames():
     global camera
     camera=cv2.VideoCapture(0)
     while True:
@@ -73,7 +75,7 @@ def video():
         camera.release()
         return render_template('index.html')
     else:
-        return Response(generate_frames("take"),mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(generate_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/give_attendance')
 def give_attendance():
@@ -83,12 +85,24 @@ def give_attendance():
 def new_registration():
     return render_template('new_regis.html')
 
-@app.route('/reg_proceed',methods=['POST', 'GET'])
+@app.route('/reg_proceed/',methods=['POST', 'GET'])
 def reg_proceed():
     if request.method=='POST':
+        global Id_
+        Id_ = request.form['Id']
+        name_ = request.form['name']
+        email_ = request.form['email']
+        #global new_person
+        new_person = Att(Id=Id_, name=name_ ,email=email_, face_encoding="0")
+        db.session.add(new_person)
+        db.session.commit()
         message=False
-        return render_template('reg_proceed.html',message=message) 
+        global persons
+        persons=Att.query.order_by(Att.sno).all()
+        return render_template('reg_proceed.html',message=message,persons=persons) 
 
+    else:
+        return render_template('new_regis.html')
 @app.route('/video_reg',methods=['POST', 'GET'])
 def video_reg():
     if request.method=='POST':
@@ -98,9 +112,14 @@ def video_reg():
             message=True
             return render_template('reg_proceed.html',message=message)
         a= encode_curr_frame[0]
-        print("Face Encoding:",a)
         camera.release()
-        return render_template('index.html',)
+        person=Att.query.filter_by(Id=Id_).first()
+        person.face_encoding=str(a)
+        try:
+            db.session.commit()
+            return render_template('index.html',)
+        except:
+            return "Couldn't perform the action"
     else:
         return Response(generate_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
 

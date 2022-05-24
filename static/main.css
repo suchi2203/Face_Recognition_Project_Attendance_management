@@ -79,7 +79,7 @@ a:active { text-decoration: none; }
   }
 
   /* Full-width input fields */
-input[type=text] {
+input[type=text],input[type=integer] {
     width: 80%;
     padding: 15px;
     margin: 5px 0 22px 0;
