@@ -7,6 +7,9 @@ body{
     
 }
 
+.form_att{ display: block;
+width:60%;}
+
 .video__{
     margin: auto;
     border: black;
@@ -64,6 +67,7 @@ a:active { text-decoration: none; }
     text-decoration: none;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
+
 
 .alr_exist{ color:orangered;}
 /*Register*/

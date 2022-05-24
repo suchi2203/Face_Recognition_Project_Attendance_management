@@ -78,9 +78,35 @@ def video():
     else:
         return Response(generate_frames("take"),mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/match_att',methods=['POST', 'GET'])
+def match_att():
+    if request.method=="POST":
+        id=request.form['Id']
+        person=Att.query.filter_by(Id=id).first()
+        if person==None:
+            message=True
+            return render_template('give_att.html',message=message)
+        else:
+            str_encoding=person.face_encoding
+            name=person.name
+            list_known_face=[float(x) for x in str_encoding.split(" ")]
+            print(list_known_face)
+            print(type(list_known_face))
+            match=face_recognition.compare_faces([list_known_face],encode_curr_frame[0])
+            face_dis=face_recognition.face_distance([list_known_face],encode_curr_frame[0])
+            print("MAtch=",match,"Distance",face_dis)
+            message=False
+            return render_template('give_att.html',message=message)
+
+    else:
+        message=False
+        return render_template('give_att.html',message=message)
+
+
 @app.route('/give_attendance')
 def give_attendance():
-    return render_template('give_att.html')
+    message=False
+    return render_template('give_att.html',message=message)
 
 @app.route('/new_registration')
 def new_registration():
@@ -120,7 +146,8 @@ def video_reg():
         a= encode_curr_frame[0]
         camera.release()
         person=Att.query.filter_by(Id=Id_).first()
-        person.face_encoding=str(a)
+        str_a=" ".join(str(x) for x in a.tolist())
+        person.face_encoding=(str_a)
         try:
             db.session.commit()
             return render_template('index.html',)

@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
 </head>
 <body>
-    <h1>Taking attendance.</h1>
+    {% if message %}
+    <h3>This  id doesn't exist. Try new one!!</h3>
+    {% endif %}
+    <form action="/match_att"class="form_att", method="POST">
+        <label class="label_reg"><b>Enter your Id:</b></label>
+        <input type="integer" placeholder="Id here" name="Id" id="text_reg" required>
+    </form>
     
         <img src="{{ url_for('video') }}" width="50%" height="50%" class="video__"/>
         <div>
