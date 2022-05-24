@@ -15,11 +15,13 @@ body{
     background-color: #04AA6D;
     color: white;
     padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
+    margin: 8px 10px;
+    border: green;
     cursor: pointer;
-    width: 50%;
+    width: 23%;
     opacity: 0.9;
+    display:block;
+    float: left;
 
   }
   
@@ -63,7 +65,7 @@ a:active { text-decoration: none; }
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
-
+.alr_exist{ color:orangered;}
 /*Register*/
 .h1_reg{
     font-size: 50px;
@@ -97,7 +99,7 @@ input[type=text],input[type=integer] {
       display: inline-block;
       width:100%;
   }
-  .retry{ color:red;}
+  .retry{ color:orangered;}
   input[type=text]:focus{
     background-color: #ddd;
     outline: none;

@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_reg.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 class Att(db.Model):
     sno= db.Column(db.Integer, primary_key=True)
     Id = db.Column(db.Integer,nullable=False)
@@ -27,7 +28,7 @@ def face_encodings(image):
         encode= face_recognition.face_encodings(img)[0]
         return encode
 
-def generate_frames():
+def generate_frames(work=""):
     global camera
     camera=cv2.VideoCapture(0)
     while True:
@@ -54,7 +55,7 @@ def generate_frames():
             for encode_face,faceloc in zip(encode_curr_frame,face_curr_frame):
                 y1,x2,y2,x1=faceloc
                 y1,x2,y2,x1=y1*4,x2*4,y2*4,x1*4
-                cv2.rectangle(frame,(x1,y1),(x2,y2),(0,0,255),2)
+                cv2.rectangle(frame,(x1,y1),(x2,y2),(0,255,255),2)
 
                 ret,buffer=cv2.imencode('.jpg',frame)
                 frame=buffer.tobytes()
@@ -75,7 +76,7 @@ def video():
         camera.release()
         return render_template('index.html')
     else:
-        return Response(generate_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(generate_frames("take"),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/give_attendance')
 def give_attendance():
@@ -85,24 +86,29 @@ def give_attendance():
 def new_registration():
     return render_template('new_regis.html')
 
-@app.route('/reg_proceed/',methods=['POST', 'GET'])
+@app.route('/reg_proceed',methods=['POST', 'GET'])
 def reg_proceed():
     if request.method=='POST':
         global Id_
         Id_ = request.form['Id']
         name_ = request.form['name']
         email_ = request.form['email']
-        #global new_person
-        new_person = Att(Id=Id_, name=name_ ,email=email_, face_encoding="0")
-        db.session.add(new_person)
-        db.session.commit()
-        message=False
-        global persons
-        persons=Att.query.order_by(Att.sno).all()
-        return render_template('reg_proceed.html',message=message,persons=persons) 
+        personz=Att.query.filter_by(Id=Id_).first()
+        if personz==None:
+            global new_person
+            new_person = Att(Id=Id_, name=name_ ,email=email_, face_encoding="0")
+            db.session.add(new_person)
+            db.session.commit()
+            message=False
+        
+            return render_template('reg_proceed.html',message=message) 
+        else:
+            message=True
+            return render_template('new_regis.html',message=message)
 
     else:
-        return render_template('new_regis.html')
+        message=False
+        return render_template('new_regis.html',message= message)
 @app.route('/video_reg',methods=['POST', 'GET'])
 def video_reg():
     if request.method=='POST':
@@ -121,7 +127,7 @@ def video_reg():
         except:
             return "Couldn't perform the action"
     else:
-        return Response(generate_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(generate_frames("reg"),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/view_attendance')
 def view_attendance():

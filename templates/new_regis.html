@@ -10,6 +10,9 @@
         <div class="container_register">
             <h1 class="h1 _reg">Register</h1>
             <p class="p_reg">Please fill in this form to create an account.</p>
+            {% if message %}
+            <h3 class="alr_exist">This Id already exists!!! Enter another Id</h3>
+            {% endif %}
             <hr>
             <form action="/reg_proceed" method="POST">
             <div class="entries_reg">
