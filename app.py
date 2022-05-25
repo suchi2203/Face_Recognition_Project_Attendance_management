@@ -64,7 +64,7 @@ def generate_frames(work=""):
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')    
 
 
-@app.route('/')
+@app.route('/',methods=['POST', 'GET'])
 def index():
     return render_template('index.html')
 
@@ -85,22 +85,32 @@ def match_att():
         person=Att.query.filter_by(Id=id).first()
         if person==None:
             message=True
-            return render_template('give_att.html',message=message)
+            find_face=True
+            return render_template('give_att.html',message=message,find_face=find_face)
         else:
-            str_encoding=person.face_encoding
-            name=person.name
-            list_known_face=[float(x) for x in str_encoding.split(" ")]
-            print(list_known_face)
-            print(type(list_known_face))
-            match=face_recognition.compare_faces([list_known_face],encode_curr_frame[0])
-            face_dis=face_recognition.face_distance([list_known_face],encode_curr_frame[0])
-            print("MAtch=",match,"Distance",face_dis)
-            message=False
-            return render_template('give_att.html',message=message)
+            if len(encode_curr_frame)<1:
+                message=False
+                find_face=False
+                return render_template('give_att.html',message=message,find_face=find_face)
+            else:
+                camera.release()
+                str_encoding=person.face_encoding
+                name=person.name
+                list_known_face=[float(x) for x in str_encoding.split(" ")]
+                print(list_known_face)
+                print(type(list_known_face))
+                match=face_recognition.compare_faces([list_known_face],encode_curr_frame[0])
+                face_dis=face_recognition.face_distance([list_known_face],encode_curr_frame[0])
+                print("MAtch=",match,"Distance",face_dis)
+                if match[0]==True:
+                    return render_template('att_continue.html',match=match[0],name=name)
+                else:
+                    return render_template('att_continue.html',match=False,name=name)
 
     else:
         message=False
-        return render_template('give_att.html',message=message)
+        find_face=True
+        return render_template('give_att.html',message=message,find_face=find_face)
 
 
 @app.route('/give_attendance')
@@ -126,7 +136,6 @@ def reg_proceed():
             db.session.add(new_person)
             db.session.commit()
             message=False
-        
             return render_template('reg_proceed.html',message=message) 
         else:
             message=True
@@ -150,7 +159,7 @@ def video_reg():
         person.face_encoding=(str_a)
         try:
             db.session.commit()
-            return render_template('index.html',)
+            return render_template('index.html')
         except:
             return "Couldn't perform the action"
     else:

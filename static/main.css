@@ -149,3 +149,37 @@ a {
     margin: auto;
 
 }
+.att_cont{
+  display: block;
+  width: 80%;
+  height: 80%;
+  padding-top: 25px;
+  padding-bottom: 250px;
+  margin:auto;
+  background-color: rgba(64, 68, 63, 0.5);
+  opacity:0.95;
+}
+.att_cont_text{
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  margin:auto;
+  color: white;
+  padding-left: 150px;
+  padding-top: 170px;
+}
+.buttonatt_cont{
+  background-color: #63954b;
+    color: white;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-left: 480px;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    padding:15px;
+    opacity: 0.9;
+}
+.buttonatt_cont:hover {
+  opacity:1;
+}
