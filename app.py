@@ -4,14 +4,13 @@ import face_recognition
 import numpy as np
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from openpyxl import Workbook, load_workbook
 
 
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_reg.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 
 class Att(db.Model):
     sno= db.Column(db.Integer, primary_key=True)
@@ -103,6 +102,17 @@ def match_att():
                 face_dis=face_recognition.face_distance([list_known_face],encode_curr_frame[0])
                 print("MAtch=",match,"Distance",face_dis)
                 if match[0]==True:
+                    wb=load_workbook('attendance.xlsx')
+                    month=datetime.now().strftime("%B")
+                    ws=wb[month]
+                    row_=2
+                    column_=2
+                    while(ws.cell(row=row_,column=column_).value != None):
+                        row_ +=1
+                    a=datetime.now().date()
+                    column_=int(str(a)[-2]+str(a)[-1])+3
+                    ws.cell(row=row_, column=column_).value ="P"
+                    wb.save('attendance.xlsx')
                     return render_template('att_continue.html',match=match[0],name=name)
                 else:
                     return render_template('att_continue.html',match=False,name=name)
@@ -135,6 +145,20 @@ def reg_proceed():
             new_person = Att(Id=Id_, name=name_ ,email=email_, face_encoding="0")
             db.session.add(new_person)
             db.session.commit()
+            SNo=new_person.sno
+            data_att_sheet=[SNo,Id_,name_]
+            wb=load_workbook('attendance.xlsx')
+            ws=wb["January"]
+            row_=2
+            column_=2
+            while(ws.cell(row=row_,column=column_).value != None):
+                row_ +=1
+            for sheet in wb.sheetnames:
+                ws=wb[sheet]
+                ws.cell(row=row_, column=1).value =SNo
+                ws.cell(row=row_, column=2).value =Id_
+                ws.cell(row=row_, column=3).value =name_
+                wb.save('attendance.xlsx')
             message=False
             return render_template('reg_proceed.html',message=message) 
         else:
@@ -167,7 +191,34 @@ def video_reg():
 
 @app.route('/view_attendance')
 def view_attendance():
-    return render_template('view_attendance.html')
+    persons = Att.query.order_by(Att.sno).all()
+    return render_template('view_attendance.html',persons=persons)
+
+@app.route('/show_att/<int:id>')
+def update(id):
+    wb=load_workbook('attendance.xlsx')
+    ws=wb["January"]
+    row_=2
+    column_=2
+    while(ws.cell(row=row_,column=column_).value != None):
+        row_ +=1
+
+    year=["January","February","March","April","May","June","July","August","September","October","November","December"]
+    att=[]
+    for month in year:
+        ws=wb[month]
+        m=[]
+        for i in range(4,35):
+            m.append(ws.cell(row=row_,column=i).value)
+        att.append(m)
+    print(att)
+    name_=ws.cell(row=row_,column=3).value
+    return render_template('show_att.html',listt=att,name=name_)
+
+
+    
+    
+
 
 if __name__=='__main__':
     app.run(debug=True)

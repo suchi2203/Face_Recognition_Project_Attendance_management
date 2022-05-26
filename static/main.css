@@ -183,3 +183,13 @@ a {
 .buttonatt_cont:hover {
   opacity:1;
 }
+
+table,td, th {
+  border: 1px solid rgb(14, 115, 44);
+  margin:auto;
+  padding:8px 15px 8px 15px;
+}
+.people_list{
+  padding-top: 15px;
+  border:#f1f1f1;
+}
