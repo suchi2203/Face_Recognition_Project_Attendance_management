@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+    <title>Admin Actions</title>
+</head>
+<body>
+  <div style="margin:0px; padding:0px;">
+    <nav>
+        <ul class="topnav">
+            <li style="cursor: pointer; margin-left: 15px;"><a  href="/">Home</a></li>
+            <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
+            <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
+            <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
+            <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
+        </ul>
+    </nav>
+    </div>
+
+    
+        <div class="imgcontainer_admin">
+          <img src="{{ url_for('static',filename='lock_admin.png') }}" alt="Admin" class="avatar_admin">
+        </div>
+        {% if message %}
+        <p style="color:red; font-size: 21px; margin-left: 135px;">** Invalid Crediantials **</p>
+        {% endif %}
+        <div class="container_admin">
+            
+            <form action="/admin_login" method="POST">
+          <label class="label_reg" for="text"><b>Admin Id</b></label>
+          <input type="text" placeholder="Enter Admin Id" name="admin_Id" required>
+      
+          <label class="label_reg" for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="admin_psw" required>
+      
+          <button class="button1" type="submit" style="margin-left: 150px;">Login</button>
+        </form>
+            <form action="/", method="POST">
+          <button  type="submit" class="button1" style="margin-left: 50px;">Cancel</button>
+            </form>
+    </div>
+    
+</body>
+</html>

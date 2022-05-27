@@ -9,18 +9,37 @@
 </head>
 <body>
     <div class="att_cont">
+        {% if no_face_reg==False %}    
     {% if match==True %}
-        <div>
+        
+            {% if match==True %}
             <p class="att_cont_text">
-                {{name}}, your attendance is recorded :)
+                {{name}},</p><br>
+                <p class="att_cont_text" style="padding-top:15px;"> Your attendance for the day is already recorded !!
+            </p>
+        
+            {% else %}
+            <div>
+            <p class="att_cont_text">
+                {{name}},</p> <br>
+                <pp class="att_cont_text" style="padding-top:15px;"> Your attendance is recorded :)
             </p>
         </div>
-
+            {% endif %}
     {% else %}
 
     <div>
         <p  class="att_cont_text">
             Sorry your face didn't match :(
+        </p>
+    </div>
+    {% endif %}
+    {% else %}
+    <div>
+        <p  class="att_cont_text">
+            No face Registered with this Id :( </p>><br>
+            <p  class="att_cont_text" style="padding-top:15px;">
+            Kindly Reregister.
         </p>
     </div>
     {% endif %}
@@ -34,6 +53,6 @@
         <button class="buttonatt_cont">Continue</button>
     </form>
 </div>
-</div> 
+</div>
 </body>
 </html>

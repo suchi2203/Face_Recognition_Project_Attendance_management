@@ -67,6 +67,9 @@ def generate_frames(work=""):
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about')
 
 
 @app.route('/video',methods=['POST', 'GET'])
@@ -94,6 +97,13 @@ def match_att():
             else:
                 camera.release()
                 str_encoding=person.face_encoding
+                #
+                if str_encoding=="0":
+                    already=False
+                    name=person.name
+                    no_face_reg=True
+                    return render_template('att_continue.html',match=False,name=name,already=already,no_face_reg=no_face_reg)
+             
                 name=person.name
                 list_known_face=[float(x) for x in str_encoding.split(" ")]
                 print(list_known_face)
@@ -105,17 +115,25 @@ def match_att():
                     wb=load_workbook('attendance.xlsx')
                     month=datetime.now().strftime("%B")
                     ws=wb[month]
-                    row_=2
-                    column_=2
-                    while(ws.cell(row=row_,column=column_).value != None):
-                        row_ +=1
+                    sno=person.sno
+                    row_=sno+1
                     a=datetime.now().date()
                     column_=int(str(a)[-2]+str(a)[-1])+3
-                    ws.cell(row=row_, column=column_).value ="P"
-                    wb.save('attendance.xlsx')
-                    return render_template('att_continue.html',match=match[0],name=name)
+                
+                    if ws.cell(row=row_, column=column_).value =="P":
+                        wb.save('attendance.xlsx')
+                        already=True
+                        no_face_reg=False
+                        return render_template('att_continue.html',match=match[0],name=name,already=already,no_face_reg=no_face_reg)
+                    else:
+                        ws.cell(row=row_, column=column_).value ="P"
+                        wb.save('attendance.xlsx')
+                        already=False
+                        no_face_reg=False
+                        return render_template('att_continue.html',match=match[0],name=name,already=already,no_face_reg=no_face_reg)
                 else:
-                    return render_template('att_continue.html',match=False,name=name)
+                    no_face_reg=False
+                    return render_template('att_continue.html',match=False,name=name,no_face_reg=no_face_reg)
 
     else:
         message=False
@@ -128,9 +146,24 @@ def give_attendance():
     message=False
     return render_template('give_att.html',message=message)
 
+@app.route('/admin_login',methods=['POST', 'GET'])
+def admin_action():
+    if request.method=='POST':
+        adminId=request.form['admin_Id']
+        pswd=request.form['admin_psw']
+        if adminId=="a" and pswd=="a":
+            return render_template('del_or_reg.html')
+        else:
+            message=True
+            return render_template('admin_action.html',message=message)
+    else:
+        message=False
+        return render_template('admin_action.html',message=message)    
+
 @app.route('/new_registration')
 def new_registration():
     return render_template('new_regis.html')
+
 
 @app.route('/reg_proceed',methods=['POST', 'GET'])
 def reg_proceed():
@@ -146,13 +179,9 @@ def reg_proceed():
             db.session.add(new_person)
             db.session.commit()
             SNo=new_person.sno
-            data_att_sheet=[SNo,Id_,name_]
             wb=load_workbook('attendance.xlsx')
-            ws=wb["January"]
-            row_=2
-            column_=2
-            while(ws.cell(row=row_,column=column_).value != None):
-                row_ +=1
+            row_=SNo+1
+            sheetnames=["January","February","March","April","May","June","July","August","September","October","November","December"]
             for sheet in wb.sheetnames:
                 ws=wb[sheet]
                 ws.cell(row=row_, column=1).value =SNo
@@ -181,37 +210,57 @@ def video_reg():
         person=Att.query.filter_by(Id=Id_).first()
         str_a=" ".join(str(x) for x in a.tolist())
         person.face_encoding=(str_a)
+        name_=person.name
         try:
             db.session.commit()
-            return render_template('index.html')
+            return render_template('regis_success.html',name=name_)
         except:
             return "Couldn't perform the action"
     else:
         return Response(generate_frames("reg"),mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/view_attendance')
-def view_attendance():
+@app.route('/view_list_att')
+def view_list():
     persons = Att.query.order_by(Att.sno).all()
-    return render_template('view_attendance.html',persons=persons)
+    return render_template('view_list_att.html',persons=persons)
 
-@app.route('/show_att/<int:id>')
-def update(id):
+@app.route('/view_list_del')
+def view_list_del():
+    persons = Att.query.order_by(Att.sno).all()
+    return render_template('view_list_del.html',persons=persons)
+
+@app.route('/remove_user/<int:sno>')
+def remove_user(sno):
+    print("Sno:",sno)
+    person= Att.query.get_or_404(sno)
+    print("Reached")
+    db.session.delete(person)
+    db.session.commit()
+    persons = Att.query.order_by(Att.sno).all()
+    return render_template('view_list_del.html',persons=persons)
+
+@app.route('/show_att/<int:sno>')
+def update(sno):
+    person= Att.query.get_or_404(sno)
     wb=load_workbook('attendance.xlsx')
-    ws=wb["January"]
-    row_=2
-    column_=2
-    while(ws.cell(row=row_,column=column_).value != None):
-        row_ +=1
-
     year=["January","February","March","April","May","June","July","August","September","October","November","December"]
     att=[]
+    row_=sno+1
     for month in year:
         ws=wb[month]
         m=[]
         for i in range(4,35):
-            m.append(ws.cell(row=row_,column=i).value)
+            a=ws.cell(row=row_,column=i).value
+            if a==None:
+                if month in ['February','April','June','September','November'] and i==34:
+                    m.append("X")
+                elif month=='February' and i==33:
+                    m.append("X")
+                else:    
+                    m.append(" ")
+            else:
+                m.append(a)
         att.append(m)
-    print(att)
     name_=ws.cell(row=row_,column=3).value
     return render_template('show_att.html',listt=att,name=name_)
 

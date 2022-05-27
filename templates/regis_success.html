@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Att_taken</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+</head>
+<body>
+    <div class="att_cont">
+            <div>
+            <p class="att_cont_text">
+                {{name}}'s',</p> <br>
+                <pp class="att_cont_text" style="padding-top:15px;"> Registration Successful !!
+            </p>
+        </div>
+     
+
+
+    <div>
+    <form action="/", method="POST">
+        <button class="buttonatt_cont">Home</button>
+    </form>
+    <form action="/new_registration">
+        <button class="buttonatt_cont">Continue</button>
+    </form>
+</div>
+</div>
+</body>
+</html>

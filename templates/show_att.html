@@ -8,7 +8,21 @@
     <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
 </head>
 <body>
-    <h2>{{name}}'s Annual Attendance Report</h2>
+    <div style="margin:0px; padding:0px;">
+        <nav>
+            <ul class="topnav">
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/">Home</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
+                <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        </div>
+    <p class="ann_report">Annual Attendance Report</p>
+    <br>
+    <p class="ann_report" style="margin-left: 610px;">{{name}}</p>
+
     <table class="people_list">
         <tr>
             <th>Date</th>
