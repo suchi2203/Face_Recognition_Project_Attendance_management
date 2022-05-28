@@ -10,49 +10,46 @@
 <body>
     <div class="att_cont">
         {% if no_face_reg==False %}    
-    {% if match==True %}
-        
             {% if match==True %}
-            <p class="att_cont_text">
-                {{name}},</p><br>
-                <p class="att_cont_text" style="padding-top:15px;"> Your attendance for the day is already recorded !!
-            </p>
         
+                {% if already==True %}
+                    <p class="att_cont_text">{{name}},</p>
+                    <br>
+                    <p class="att_cont_text" style="padding-top:15px;"> Your attendance for the day is already recorded !!</p>
+                {% else %}
+
+                <div>
+                    <p class="att_cont_text">{{name}},</p>
+                    <br>
+                    <p class="att_cont_text" style="padding-top:15px;"> Your attendance is recorded :)</p>
+                </div>
+
+                {% endif %}
+
             {% else %}
-            <div>
-            <p class="att_cont_text">
-                {{name}},</p> <br>
-                <pp class="att_cont_text" style="padding-top:15px;"> Your attendance is recorded :)
-            </p>
-        </div>
+
+                <div>
+                <p  class="att_cont_text">Sorry your face didn't match :(</p>
+                </div>
             {% endif %}
-    {% else %}
 
-    <div>
-        <p  class="att_cont_text">
-            Sorry your face didn't match :(
-        </p>
+        {% else %}
+            <div>
+            <p  class="att_cont_text">{{name}},your face is not registered :( </p>>
+            <br>
+            <p  class="att_cont_text" style="padding-top:15px;">Kindly Reregister.</p>
+            </div>
+        {% endif %}
+    
+        <div>
+        <form action="/", method="POST">
+            <button class="buttonatt_cont">Home</button>
+        </form>
+        <form action="/give_attendance">
+            <button class="buttonatt_cont">Continue</button>
+        </form>
+        </div>
+
     </div>
-    {% endif %}
-    {% else %}
-    <div>
-        <p  class="att_cont_text">
-            No face Registered with this Id :( </p>><br>
-            <p  class="att_cont_text" style="padding-top:15px;">
-            Kindly Reregister.
-        </p>
-    </div>
-    {% endif %}
-
-
-    <div>
-    <form action="/", method="POST">
-        <button class="buttonatt_cont">Home</button>
-    </form>
-    <form action="/give_attendance">
-        <button class="buttonatt_cont">Continue</button>
-    </form>
-</div>
-</div>
 </body>
 </html>

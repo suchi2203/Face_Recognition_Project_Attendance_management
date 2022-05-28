@@ -18,8 +18,6 @@ nav ul{
 ul.topnav li{list-style: none;
 float: left;}
 
-ul.topnav li.topnav-right{float: right;}
-
 ul.topnav li a{
   display: block;
   text-decoration: none;

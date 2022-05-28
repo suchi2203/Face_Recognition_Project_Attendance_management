@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>show_att</title>
+    <title>Show_Attendance</title>
     <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
 </head>
 <body>
+
     <div style="margin:0px; padding:0px;">
         <nav>
             <ul class="topnav">
@@ -15,15 +16,16 @@
                 <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
                 <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
                 <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
-                <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
             </ul>
         </nav>
-        </div>
+    </div>
+
     <p class="ann_report">Annual Attendance Report</p>
     <br>
     <p class="ann_report" style="margin-left: 610px;">{{name}}</p>
 
     <table class="people_list">
+
         <tr>
             <th>Date</th>
             <th>January</th>
@@ -39,24 +41,25 @@
             <th>November</th>
             <th>December</th>
         </tr>
+
         {% for j in range(31) %}
-        <tr>
-            <td>{{ j+1 }}</td>
-            <td>{{ listt[0][j] }}</td>
-            <td>{{ listt[1][j] }}</td>
-            <td>{{ listt[2][j] }}</td>
-            <td>{{ listt[3][j] }}</td>
-            <td>{{ listt[4][j] }}</td>
-            <td>{{ listt[5][j] }}</td>
-            <td>{{ listt[6][j] }}</td>
-            <td>{{ listt[7][j] }}</td>
-            <td>{{ listt[8][j] }}</td>
-            <td>{{ listt[9][j] }}</td>
-            <td>{{ listt[10][j] }}</td>
-            <td>{{ listt[11][j] }}</td>
-            
-        </tr>
+            <tr>
+                <td>{{ j+1 }}</td>
+                <td>{{ listt[0][j] }}</td>
+                <td>{{ listt[1][j] }}</td>
+                <td>{{ listt[2][j] }}</td>
+                <td>{{ listt[3][j] }}</td>
+                <td>{{ listt[4][j] }}</td>
+                <td>{{ listt[5][j] }}</td>
+                <td>{{ listt[6][j] }}</td>
+                <td>{{ listt[7][j] }}</td>
+                <td>{{ listt[8][j] }}</td>
+                <td>{{ listt[9][j] }}</td>
+                <td>{{ listt[10][j] }}</td>
+                <td>{{ listt[11][j] }}</td>
+            </tr>
         {% endfor %}
+        
     </table>
     
 </body>

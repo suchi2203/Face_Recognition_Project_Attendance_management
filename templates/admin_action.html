@@ -15,7 +15,6 @@
             <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
             <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
             <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
-            <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
         </ul>
     </nav>
     </div>
@@ -24,9 +23,11 @@
         <div class="imgcontainer_admin">
           <img src="{{ url_for('static',filename='lock_admin.png') }}" alt="Admin" class="avatar_admin">
         </div>
+
         {% if message %}
-        <p style="color:red; font-size: 21px; margin-left: 135px;">** Invalid Crediantials **</p>
+        <p style="color:red; font-size: 21px; margin-left: 135px;">** Invalid Credentials **</p>
         {% endif %}
+
         <div class="container_admin">
             
             <form action="/admin_login" method="POST">
@@ -41,6 +42,7 @@
             <form action="/", method="POST">
           <button  type="submit" class="button1" style="margin-left: 50px;">Cancel</button>
             </form>
+            
     </div>
     
 </body>

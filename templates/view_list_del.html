@@ -8,37 +8,41 @@
     <title>Del_User</title>
 </head>
 <body>
+
     <div style="margin:0px; padding:0px;">
         <nav>
             <ul class="topnav">
                 <li style="cursor: pointer; margin-left: 15px;"><a  href="/">Home</a></li>
                 <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
-                <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
             </ul>
         </nav>
-        </div>
+    </div>
+
     {% if persons|length <1 %}
         <h1 class="No_reg">There are no registrations!!</h1>
-     {% else %}
-    <table class="people_list">
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>View_Attendance</th>
-        </tr>
+
+    {% else %}
+
+        <table class="people_list">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>View_Attendance</th>
+            </tr>
         
-        {% for person in persons %}
-        <tr>
-            <td>{{ person.Id }}</td>
-            <td>{{ person.name }}</td>
-            <td>
-                <a href="/remove_user/{{person.sno}}">Delete User</a>
-            </td> 
-        </tr>
-        {% endfor %}
-    </table>
+            {% for person in persons %}
+            <tr>
+                <td>{{ person.Id }}</td>
+                <td>{{ person.name }}</td>
+                <td><a href="/remove_user/{{person.sno}}">Delete User</a></td> 
+            </tr>
+            {% endfor %}
+
+        </table>
+
     {% endif %}
+
 </body>
 </html>

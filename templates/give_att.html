@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Give_Attendance</title>
     <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
 </head>
 <body>
     <p>** Fill your Id and press Enter when there is a rectangle formed around your face **</p>
+
     {% if message %}
-    <h3>This Id hasn't been registered!!!</h3>
+        <h3>This Id hasn't been registered!!!</h3>
     {% endif %}
+    
     {% if find_face==False %}
-    <h3>Couldn't find a face. Try again!!</h3>
+        <h3>Couldn't find a face. Try again!!</h3>
     {% endif %}
+
+
     <form action="/match_att" class="form_att", method="POST">
 
         <label class="label_reg"><b>Enter your Id:</b></label>
@@ -25,11 +29,9 @@
         <img src="{{ url_for('video') }}"  class="video__"/>
         <div>
             <form action="/video", method="POST">
-                <button class="button1">Back</button>
+                <button class="button1">Back to Home</button>
             </form>
         </div>
-         
-        
-    
+           
 </body>
 </html>

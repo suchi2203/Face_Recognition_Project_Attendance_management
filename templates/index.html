@@ -8,39 +8,42 @@
     <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
 </head>
 <body>
+
     <div style="margin:0px; padding:0px;">
-    <nav>
-        <ul class="topnav">
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/">Home</a></li>
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
-            <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
-            <li style="cursor: pointer;margin-right: 15px;" class="topnav-right" ><a href="/about">About</a></li>
-        </ul>
-    </nav>
+        <nav>
+            <ul class="topnav">
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/">Home</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/give_attendance">Give_Attendance</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/admin_login">Admin_login</a></li>
+                <li style="cursor: pointer; margin-left: 15px;"><a  href="/view_list_att">View_Attendance</a></li>
+            </ul>
+        </nav>
     </div>
 
     <div class="row">
+
         <div class="column">
             <a href="/give_attendance">
             <img class='image_front' alt="Give_attendance" style="width:60%" src="{{ url_for('static',filename='give_attendance.png') }} " >
             <h1 class="text_front" >Give Attendance</h1>
             </a>
         </div>
+
         <div class="column">
             <a href="/admin_login">
             <img class='image_front' alt="Admin Login" style="width:60%" src="{{ url_for('static',filename='admin.png') }} " >
             <h1 class="text_front">Admin Login</h1>
             </a>
         </div>
+
         <div class="column">
             <a href="/view_list_att">
             <img class='image_front' alt="View_attendance" style="width:60%" src="{{ url_for('static',filename='view_attendance.png') }} " >
             <h1 class="text_front">View Attendance</h1>
             </a>
         </div>
-      </div>
 
-    
+    </div>
+ 
 </body>
 </html>
