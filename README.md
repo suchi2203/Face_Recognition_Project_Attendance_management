@@ -1,0 +1,2 @@
+# Face_Recognition_Project_Attendance_management
+Attendance management project based on face recognition
