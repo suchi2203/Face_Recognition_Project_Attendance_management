@@ -5,7 +5,7 @@
 The admin credentials are provided in credentials.txt file both id and password being space seperated which can be modified as well.
 the Id is admin_ms and password is @user.engage
 Each user has a unique Id which can be his/her roll number or employee Id by which he/she will be registered.
-Any user can give his/her attendance and view their annual attendance report. 
+Any user can give his/her attendance via the webcam and view their annual attendance report. 
 The excel sheet records the monthly records in the 12 sheets. Excel file must not be modified by anyone. User is not deleted from here.
 Thus an annual report can be maintained and user can very easily give and view his/her attendance.
 
@@ -43,7 +43,7 @@ I have provided the file named as dlib-19.22.99-cp39-cp39-win_amd64.whl
 >Go to Folder [Where you have saved "dlib-19.22.99-cp39-cp39-win_amd64.whl"]
 > Open "CMD" or "POWERSHELL" [Where you have saved Python Wheel] 
 > Type Command : pip install dlib-19.22.99-cp39-cp39-win_amd64.whl
-This should do the work, in case it doesn't refer https://github.com/shashankx86/dlib_compiled 
+This should do the work, in case it doesn't, refer https://github.com/shashankx86/dlib_compiled 
 
 **Instructions**
 # The application is designed as a desktop web app.
